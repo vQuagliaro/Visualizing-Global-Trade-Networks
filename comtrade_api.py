@@ -7,6 +7,9 @@ import time
 import os
 
 # COMTRADE SUBSCRIPTION KEY *****************************************************
+pd.set_option("display.max_rows", None)
+pd.set_option("display.max_columns", None)
+pd.set_option("display.max_colwidth", None)
 
 subscription_key = os.getenv("COMTRADE_API_KEY")
 if not subscription_key:
