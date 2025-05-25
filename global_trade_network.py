@@ -19,14 +19,13 @@ from plotly.colors import hex_to_rgb
 from dash import Dash, html, Input, Output, callback, ctx
 import dash_bootstrap_components as dbc
 from datetime import datetime
-
-import warnings
-
-warnings.filterwarnings('ignore')
+import os
 
 # COMTRADE SUBSCRIPTION KEY *****************************************************
 
-subscription_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+subscription_key = os.getenv("COMTRADE_API_KEY")
+if not subscription_key:
+    raise ValueError("COMTRADE_API_KEY environment variable must be set")
 
 # CODES *************************************************************************
 
@@ -291,8 +290,8 @@ for i, node in enumerate(G.iternodes()):
 
 G.layout(prog='fdp')
 
-graph_width = int(G.graph_attr['bb'].split(',')[2])
-graph_height = int(G.graph_attr['bb'].split(',')[3])
+graph_width = int(float(G.graph_attr['bb'].split(',')[2]))
+graph_height = int(float(G.graph_attr['bb'].split(',')[3]))
 
 # CYTOSCAPE LAYOUT **************************************************************
 
@@ -1066,4 +1065,4 @@ def get_image(get_png_clicks):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run(debug=True)
